@@ -136,5 +136,8 @@
 
     </form>
 
+    <footer style="margin-top:30px; padding:10px; background:#f0f0f0; text-align:center; border-top:1px solid #ccc;">
+        <p th:text="${'실습 수행 일시: ' + #temporals.format(#temporals.createNow(), 'yyyy년 MM월 dd일 (E) a hh:mm:ss') + ' | 학번: 2191188 | 성명: 윤혜성'}"></p>
+    </footer>
 </body>
 </html>
