@@ -57,4 +57,18 @@ public class CategoryController {
             return "categoryForm";
         }
     }
+
+    // 카테고리 삭제
+    @PostMapping("/{id}/delete")
+    public String deleteCategory(@PathVariable Long id,
+                                 RedirectAttributes redirectAttributes) {
+        try {
+            categoryService.deleteCategory(id);
+            redirectAttributes.addFlashAttribute("successMessage", "카테고리가 삭제되었습니다.");
+        } catch (IllegalStateException e) {
+            // 상품이 연결되어 있어서 삭제 불가한 경우
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
+        return "redirect:/categories";
+    }
 }

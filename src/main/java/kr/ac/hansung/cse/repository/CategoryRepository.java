@@ -37,6 +37,22 @@ public class CategoryRepository {
         return result.isEmpty() ? Optional.empty() : Optional.of(result.get(0));
     }
 
+    // 해당 카테고리에 연결된 상품 수 조회
+    public long countProductsByCategoryId(Long categoryId) {
+        return em.createQuery(
+                        "SELECT COUNT(p) FROM Product p WHERE p.category.id = :cid", Long.class)
+                .setParameter("cid", categoryId)
+                .getSingleResult();
+    }
+
+    // 카테고리 삭제
+    public void delete(Long id) {
+        Category category = em.find(Category.class, id);
+        if (category != null) {
+            em.remove(category);
+        }
+    }
+
     // JOIN FETCH: N+1 문제 방지 (Category + Products 한 번에 로드)
     public Optional<Category> findByIdWithProducts(Long id) {
         List<Category> result = em.createQuery(
