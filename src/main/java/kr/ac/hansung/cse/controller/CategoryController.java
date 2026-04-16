@@ -1,6 +1,7 @@
 package kr.ac.hansung.cse.controller;
 
 import jakarta.validation.Valid;
+import kr.ac.hansung.cse.exception.DuplicateCategoryException;
 import kr.ac.hansung.cse.model.Category;
 import kr.ac.hansung.cse.model.CategoryForm;
 import kr.ac.hansung.cse.service.CategoryService;
@@ -52,7 +53,7 @@ public class CategoryController {
             redirectAttributes.addFlashAttribute("successMessage",
                     "'" + saved.getName() + "' 카테고리가 등록되었습니다.");
             return "redirect:/categories";
-        } catch (IllegalStateException e) {
+        } catch (DuplicateCategoryException e) {
             bindingResult.rejectValue("name", "duplicate", e.getMessage());
             return "categoryForm";
         }

@@ -1,5 +1,6 @@
 package kr.ac.hansung.cse.service;
 
+import kr.ac.hansung.cse.exception.DuplicateCategoryException;
 import kr.ac.hansung.cse.model.Category;
 import kr.ac.hansung.cse.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class CategoryService {
     @Transactional
     public Category createCategory(String name) {
         categoryRepository.findByName(name).ifPresent(c -> {
-            throw new IllegalStateException("이미 존재하는 카테고리입니다: " + name);
+            throw new DuplicateCategoryException(name);
         });
 
         Category category = new Category(name);
